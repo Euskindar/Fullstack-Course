@@ -1,12 +1,9 @@
-# React + Vite
+# Fullstack course PART 1
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## ES
 
-Currently, two official plugins are available:
+En esta seccion se resolveran los ejercicios correspondientes a la parte 1 del curso (los cuales, posteriormente, conformaran parte de una aplicacion mayor), en la que se realiza una introduccion sencilla a React y sus componentes.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## EN
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+This section will cover the exercises corresponding to Part 1 of the course (which will later become part of a larger application), where a simple introduction to React and its components is provided.
