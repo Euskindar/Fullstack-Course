@@ -1,7 +1,11 @@
-const Header = ({ course }) => {
-  return <h1>{course}</h1>;
+// Component to display course information
+const Header = (props) => {
+  console.log(props);
+
+  return <h1>{props.course}</h1>;
 };
 
+// Component to display the content of the course
 const Content = ({ parts }) => {
   console.log(parts);
 
@@ -20,21 +24,29 @@ const Content = ({ parts }) => {
   );
 };
 
+// Component to display the total number of exercises
 const Total = ({ exercises1, exercises2, exercises3 }) => {
   return <p>Number of exercises: {exercises1 + exercises2 + exercises3}</p>;
 };
 
+// Main App component
 const App = () => {
   const course = "Half Stack application development";
 
-  const part1 = "Fundamentals of React - ";
-  const exercises1 = 10;
+  const part1 = {
+    name: "Fundamentals of React",
+    exercises: 10,
+  };
 
-  const part2 = "Using props to pass data - ";
-  const exercises2 = 7;
+  const part2 = {
+    name: "Using props to pass data",
+    exercises: 7,
+  };
 
-  const part3 = "State of a component - ";
-  const exercises3 = 14;
+  const part3 = {
+    name: "State of a component",
+    exercises: 14,
+  };
 
   return (
     <>
@@ -55,4 +67,5 @@ const App = () => {
   );
 };
 
+// Exporting the App component as default
 export default App;
