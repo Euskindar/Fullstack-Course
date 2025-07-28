@@ -7,27 +7,31 @@ const Header = (props) => {
 
 // Component to display the content of the course
 const Content = ({ parts }) => {
-  console.log(parts);
-
   return (
     <>
-      <p>
-        {parts[0].part} {parts[0].exercises}
-      </p>
-      <p>
-        {parts[1].part} {parts[1].exercises}
-      </p>
-      <p>
-        {parts[2].part} {parts[2].exercises}
-      </p>
+      {/* Mapping through parts to display each part's name and exercises */}
+      {parts.map(
+        (element, index) =>
+          console.log("Content element: ", element) || ( // Logging each part
+            <p key={index}>
+              {element.part}: {element.exercises}
+            </p>
+          )
+      )}
     </>
   );
 };
 
 // Component to display the total number of exercises
 const Total = ({ exercises1, exercises2, exercises3 }) => {
+  console.log(exercises1, exercises2, exercises3);
+
   return <p>Number of exercises: {exercises1 + exercises2 + exercises3}</p>;
 };
+
+// /////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////
 
 // Main App component
 const App = () => {
@@ -53,15 +57,15 @@ const App = () => {
       <Header course={course} />
       <Content
         parts={[
-          { part: part1, exercises: exercises1 },
-          { part: part2, exercises: exercises2 },
-          { part: part3, exercises: exercises3 },
+          { part: part1.name, exercises: part1.exercises },
+          { part: part2.name, exercises: part2.exercises },
+          { part: part3.name, exercises: part3.exercises },
         ]}
       />
       <Total
-        exercises1={exercises1}
-        exercises2={exercises2}
-        exercises3={exercises3}
+        exercises1={part1.exercises}
+        exercises2={part2.exercises}
+        exercises3={part3.exercises}
       />
     </>
   );
