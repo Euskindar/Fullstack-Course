@@ -29,6 +29,10 @@ const Total = ({ parts }) => (
   </p>
 );
 
+// /////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////
+
 // Component to display the counter value
 const Display = ({ counter }) => <div>{counter}</div>;
 
@@ -39,11 +43,16 @@ const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 // /////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////
 
+// /////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////
+// /////////////////////////////////////////////////////
+
 // Main App component
 const App = () => {
   // State variable to track the counter value
   const [counter, setCounter] = useState(0);
 
+  // Course information
   const course = {
     name: "Half Stack application development",
     parts: [
@@ -62,10 +71,16 @@ const App = () => {
     ],
   };
 
+  // State variables for left and right counters
+  const [left, setLeft] = useState(0);
+  const [right, setRight] = useState(0);
+
   // Functions to handle button clicks
   const increaseOne = () => setCounter(counter + 1);
   const decreaseOne = () => setCounter(counter - 1);
   const refreshClick = () => setCounter(0);
+  const refreshLeft = () => setLeft(0);
+  const refreshRight = () => setRight(0);
 
   return (
     <>
@@ -73,10 +88,21 @@ const App = () => {
       <Header course={course} />
       <Content parts={course.parts} />
       <Total parts={course.parts} />
+
+      <h2>Counter</h2>
       <Display counter={counter} />
-      <Button onClick={increaseOne} text="+" />
       <Button onClick={decreaseOne} text="-" />
+      <Button onClick={increaseOne} text="+" />
       <Button onClick={refreshClick} text="Refresh" />
+
+      <h2>Left and Right Counter</h2>
+      {left}
+      <Button onClick={() => setLeft(left + 1)} text={"Left"} />
+      <Button onClick={() => setRight(right + 1)} text="right" />
+      {right}
+      <br />
+      <Button onClick={refreshLeft} text="Refresh Left" />
+      <Button onClick={refreshRight} text="Refresh Right" />
     </>
   );
 };
