@@ -43,6 +43,19 @@ const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 // /////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////
 
+// Component to display the history of clicks
+const History = (props) => {
+  if (props.allClicks.length === 0) {
+    return <div>The app is used pressing the buttons</div>;
+  }
+  return <div>Button press history: {props.allClicks.join(" - ")}</div>;
+};
+
+// Component for a button that handles history actions
+const ButtonHistory = ({ handleClick, text }) => (
+  <button onClick={handleClick}>{text}</button>
+);
+
 // /////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////
@@ -71,16 +84,43 @@ const App = () => {
     ],
   };
 
-  // State variables for left and right counters
-  const [left, setLeft] = useState(0);
-  const [right, setRight] = useState(0);
-
   // Functions to handle button clicks
   const increaseOne = () => setCounter(counter + 1);
   const decreaseOne = () => setCounter(counter - 1);
   const refreshClick = () => setCounter(0);
-  const refreshLeft = () => setLeft(0);
-  const refreshRight = () => setRight(0);
+
+  // State variables for left and right counters
+  const [left, setLeft] = useState(0);
+  const [right, setRight] = useState(0);
+
+  // State variable to track all clicks
+  const [allClicks, setAll] = useState([]);
+
+  // Functions to handle left and right button clicks
+  const handleLeftClick = () => {
+    setAll(allClicks.concat("L"));
+    const newLeft = left + 1;
+    setLeft(newLeft);
+    setTotal(newLeft + right); // Update total clicks
+  };
+
+  const handleRightClick = () => {
+    setAll(allClicks.concat("R"));
+    const newRight = right + 1;
+    setRight(newRight);
+    setTotal(left + newRight); // Update total clicks
+  };
+
+  // Functions to refresh left and right counters
+  const refresClicks = () => {
+    setLeft(0);
+    setRight(0);
+    setAll([]);
+    setTotal(0);
+  };
+
+  // State variable to track the total number of clicks
+  const [total, setTotal] = useState(0);
 
   return (
     <>
@@ -97,12 +137,22 @@ const App = () => {
 
       <h2>Left and Right Counter</h2>
       {left}
-      <Button onClick={() => setLeft(left + 1)} text={"Left"} />
-      <Button onClick={() => setRight(right + 1)} text="right" />
+      <Button onClick={handleLeftClick} text="Left" />
+      <Button onClick={handleRightClick} text="Right" />
       {right}
+
       <br />
-      <Button onClick={refreshLeft} text="Refresh Left" />
-      <Button onClick={refreshRight} text="Refresh Right" />
+      <p>{allClicks.join(" - ")}</p>
+      <Button onClick={refresClicks} text="Refresh" />
+      <p>Total clicks: {total}</p>
+
+      <h2>Press History</h2>
+      <History allClicks={allClicks} />
+
+      <ButtonHistory
+        handleClick={() => console.log("History of clicks: ", allClicks)}
+        text={"History"}
+      />
     </>
   );
 };
