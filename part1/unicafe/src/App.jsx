@@ -27,6 +27,29 @@ const Display = ({ name, count }) => {
 };
 
 //////////////////////////////////////////////////////////
+
+// Component to manage the feedback statistics total, average, and positive percentage
+const MoreStatistics = ({ stats }) => {
+  // Calculate the total feedback count
+  const total = stats.reduce((sum, stat) => sum + stat.count[0], 0);
+
+  // Calculate the average feedback score
+  const average = total ? (stats[0].count[0] - stats[2].count[0]) / total : 0; // Handle division by zero
+
+  // Calculate the positive feedback percentage
+  const positivePercentage = total ? (stats[0].count[0] / total) * 100 : 0; // Handle division by zero
+
+  return (
+    <div>
+      <h3>Additional Stats</h3>
+      <p>Total: {total}</p>
+      <p>Average: {average.toFixed(2)}</p>
+      <p>Positive: {positivePercentage.toFixed(2)}%</p>
+    </div>
+  );
+};
+
+//////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 
@@ -55,6 +78,10 @@ function App() {
         <Display name={stats[1].name} count={stats[1].count} />
         <Display name={stats[2].name} count={stats[2].count} />
       </div>
+
+      <br />
+
+      <MoreStatistics stats={stats} />
     </>
   );
 }
