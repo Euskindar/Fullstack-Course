@@ -28,24 +28,58 @@ const Display = ({ name, count }) => {
 
 //////////////////////////////////////////////////////////
 
-// Component to manage the feedback statistics total, average, and positive percentage
-const MoreStatistics = ({ stats }) => {
+// Component to display total feedback statistics
+const TotalFeedback = ({ stats }) => {
   // Calculate the total feedback count
   const total = stats.reduce((sum, stat) => sum + stat.count[0], 0);
+  return <p>Total: {total}</p>;
+};
 
-  // Calculate the average feedback score
+//////////////////////////////////////////////////////////
+
+// Component to calculate the average feedback score
+const AverageFeedback = ({ stats, total }) => {
   const average = total ? (stats[0].count[0] - stats[2].count[0]) / total : 0; // Handle division by zero
+  return <p>Average: {average.toFixed(2)}</p>;
+};
 
-  // Calculate the positive feedback percentage
-  const positivePercentage = total ? (stats[0].count[0] / total) * 100 : 0; // Handle division by zero
+//////////////////////////////////////////////////////////
 
+// Component to calculate the positive feedback percentage
+const PositivePerecentageFeedback = ({ stats, total }) => {
+  const positivePercentage = total ? (stats[0].count[0] / total) * 100 : 0; // Handle division by zero\
+  return <p>Positive: {positivePercentage.toFixed(2)}%</p>;
+};
+
+//////////////////////////////////////////////////////////
+
+// Component to display the feedback statistics when feedback is given
+const DisplayStats = ({ stats }) => {
+  // Check if there are any feedback counts to display
+  if (stats.every((stat) => stat.count[0] === 0)) {
+    return <p>No feedback given</p>;
+  }
+
+  // Calculate total feedback once
+  const totalDisplay = stats.reduce((sum, stat) => sum + stat.count[0], 0);
+
+  // Render the individual feedback counts
   return (
-    <div>
-      <h3>Additional Stats</h3>
-      <p>Total: {total}</p>
-      <p>Average: {average.toFixed(2)}</p>
-      <p>Positive: {positivePercentage.toFixed(2)}%</p>
-    </div>
+    <>
+      <div>
+        <Display name={stats[0].name} count={stats[0].count} />
+        <Display name={stats[1].name} count={stats[1].count} />
+        <Display name={stats[2].name} count={stats[2].count} />
+      </div>
+
+      <br />
+
+      <div>
+        <TotalFeedback stats={stats} />
+        <AverageFeedback stats={stats} total={totalDisplay} />
+        <PositivePerecentageFeedback stats={stats} total={totalDisplay} />
+      </div>
+    </>
   );
 };
 
@@ -73,15 +107,8 @@ function App() {
       <br />
 
       <h1>Statistics</h1>
-      <div>
-        <Display name={stats[0].name} count={stats[0].count} />
-        <Display name={stats[1].name} count={stats[1].count} />
-        <Display name={stats[2].name} count={stats[2].count} />
-      </div>
 
-      <br />
-
-      <MoreStatistics stats={stats} />
+      <DisplayStats stats={stats} />
     </>
   );
 }
