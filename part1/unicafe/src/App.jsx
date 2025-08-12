@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useState } from "react";
 
 //////////////////////////////////////////////////////////
 
@@ -140,13 +140,15 @@ const DisplayStatsTable = ({ stats }) => {
           <td>{average.toFixed(2)}</td>
         </tr>
         <tr>
-          <td>Positive %</td>
+          <td>Positive (%)</td>
           <td>{positivePercentage.toFixed(2)}%</td>
         </tr>
       </tbody>
     </table>
   );
 };
+
+//////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
@@ -159,6 +161,21 @@ function App() {
     { name: "neutral", count: useState(0) },
     { name: "bad", count: useState(0) },
   ];
+
+  // Array of anecdotes to be displayed
+  const anecdotes = [
+    "If it hurts, do it more often.",
+    "Adding manpower to a late software project makes it later!",
+    "The first 90 percent of the code accounts for the first 10 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.",
+    "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
+    "Premature optimization is the root of all evil.",
+    "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
+    "Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.",
+    "The only way to go fast, is to go well.",
+  ];
+
+  // State to manage the selected anecdote index
+  const [selected, setSelected] = useState(0);
 
   return (
     <>
@@ -175,6 +192,9 @@ function App() {
       {/* <DisplayStatsBasics stats={stats} /> */}
       {/* <DisplayStatsAdvanced stats={stats} /> */}
       <DisplayStatsTable stats={stats} />
+
+      <h1>Anecdotes</h1>
+      <div>{anecdotes[selected]}</div>
     </>
   );
 }
