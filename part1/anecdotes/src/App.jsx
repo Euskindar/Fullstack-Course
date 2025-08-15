@@ -1,6 +1,30 @@
-import { use, useState } from "react";
+import { useState } from "react";
 
 //////////////////////////////////////////////////////////
+
+// Button component to handle random selection of anecdotes
+const ButtonRandom = ({ length, setSelected }) => {
+  const handleClick = () => {
+    //Generate a random number based on the length of the anecdotes array
+    const randomIndex = Math.floor(Math.random() * length);
+
+    // Update the selected anecdote index with a new random index
+    setSelected(randomIndex);
+  };
+
+  return <button onClick={handleClick}>Next andecdote</button>;
+};
+
+//////////////////////////////////////////////////////////
+
+// Button component to handle voting for anecdotes
+const ButtonVote = ({ vote, setVote }) => {
+  const handleVote = () => {
+    // Increment the vote count for the selected anecdote
+    setVote(vote + 1);
+  };
+  return <button onClick={handleVote}>Vote</button>;
+};
 
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
@@ -22,10 +46,16 @@ function App() {
   // State to manage the selected anecdote index
   const [selected, setSelected] = useState(0);
 
+  // State to manage the vote count for the selected anecdote
+  const [vote, setVote] = useState(0);
+
   return (
     <>
       <h1>Anecdotes</h1>
       <div>{anecdotes[selected]}</div>
+      <br />
+      <ButtonRandom length={anecdotes.length} setSelected={setSelected} />
+      <ButtonVote vote={selected} setVote={setVote} />
     </>
   );
 }
