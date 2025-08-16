@@ -3,27 +3,15 @@ import { useState } from "react";
 //////////////////////////////////////////////////////////
 
 // Button component to handle random selection of anecdotes
-const ButtonRandom = ({ length, setSelected }) => {
-  const handleClick = () => {
-    //Generate a random number based on the length of the anecdotes array
-    const randomIndex = Math.floor(Math.random() * length);
-
-    // Update the selected anecdote index with a new random index
-    setSelected(randomIndex);
-  };
-
-  return <button onClick={handleClick}>Next andecdote</button>;
+const ButtonRandom = ({ onNextAnecdote }) => {
+  return <button onClick={onNextAnecdote}>Next andecdote</button>;
 };
 
 //////////////////////////////////////////////////////////
 
 // Button component to handle voting for anecdotes
-const ButtonVote = ({ vote, setVote }) => {
-  const handleVote = () => {
-    // Increment the vote count for the selected anecdote
-    setVote(vote + 1);
-  };
-  return <button onClick={handleVote}>Vote</button>;
+const ButtonVote = ({ onVote }) => {
+  return <button onClick={onVote}>Vote</button>;
 };
 
 //////////////////////////////////////////////////////////
@@ -43,19 +31,44 @@ function App() {
     "The only way to go fast, is to go well.",
   ];
 
+  ////////////////////////////////////////////////////////////////
+
   // State to manage the selected anecdote index
   const [selected, setSelected] = useState(0);
 
-  // State to manage the vote count for the selected anecdote
-  const [vote, setVote] = useState(0);
+  // Event handler for selecting a random anecdote
+  const handleAnecdote = () => {
+    //Generate a random number based on the length of the anecdotes array
+    const randomIndex = Math.floor(Math.random() * anecdotes.length);
+
+    // Update the selected anecdote index with a new random index
+    setSelected(randomIndex);
+  };
+
+  ////////////////////////////////////////////////////////////////
+
+  // State to manage the votes for each anecdote and initialize it with zeros
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0));
+
+  // Event handler for voting
+  const handleVote = () => {
+    // Create a copy of the votes array
+    const copyVotes = [...votes];
+    copyVotes[selected] += 1;
+    setVotes(copyVotes);
+  };
+
+  /////////////////////////////////////////////////////////////////
 
   return (
     <>
       <h1>Anecdotes</h1>
       <div>{anecdotes[selected]}</div>
       <br />
-      <ButtonRandom length={anecdotes.length} setSelected={setSelected} />
-      <ButtonVote vote={selected} setVote={setVote} />
+      <div>Has {votes[selected]} votes</div>
+      <br />
+      <ButtonRandom onNextAnecdote={handleAnecdote} />
+      <ButtonVote onVote={handleVote} />
     </>
   );
 }
