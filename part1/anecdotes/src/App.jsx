@@ -15,6 +15,29 @@ const ButtonVote = ({ onVote }) => {
 };
 
 //////////////////////////////////////////////////////////
+
+const DisplayMostVoted = ({ anecdotes, votes }) => {
+  // Calculate the maximum number of votes
+  const maxVotes = Math.max(...votes);
+
+  // Find the index of the anecdote with the most votes
+  const mostVotedIndex = votes.indexOf(maxVotes);
+
+  return (
+    <div>
+      {maxVotes > 0 ? (
+        <>
+          <h3>{anecdotes[mostVotedIndex]}</h3>
+          <div>Has {votes[mostVotedIndex]} votes</div>
+        </>
+      ) : (
+        <p>No votes yet.</p>
+      )}
+    </div>
+  );
+};
+
+//////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 
@@ -64,11 +87,20 @@ function App() {
     <>
       <h1>Anecdotes</h1>
       <div>{anecdotes[selected]}</div>
+
       <br />
+
       <div>Has {votes[selected]} votes</div>
+
       <br />
+
       <ButtonRandom onNextAnecdote={handleAnecdote} />
       <ButtonVote onVote={handleVote} />
+
+      <br />
+
+      <h2>Anecdotes with most votes</h2>
+      <DisplayMostVoted anecdotes={anecdotes} votes={votes} />
     </>
   );
 }
